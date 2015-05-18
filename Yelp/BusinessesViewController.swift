@@ -42,6 +42,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         })()
         
         Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        //Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
             for business in businesses {
@@ -119,8 +120,14 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
         var categories = filters["categories"] as? [String]
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil){(businesses: [Business]!, error: NSError!)
-        -> Void in
+        var deals = filters["deals.id"] as? String
+        var offeringDeal = true
+        if deals == nil{
+            offeringDeal = false
+        }
+        Business.searchWithTerm("Restaurants", sort: .Distance, categories: categories, deals: offeringDeal) { (businesses: [Business]!, error: NSError!) -> Void in
+//        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil){(businesses: [Business]!, error: NSError!)
+//        -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
             

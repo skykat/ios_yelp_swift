@@ -14,7 +14,7 @@ import UIKit
     optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
 }
 
-class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate{
+class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DealSwitchCellDelegate{
 
     @IBOutlet weak var filtersTableView: UITableView!
     
@@ -59,27 +59,69 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         delegate?.filtersViewController!(self, didUpdateFilters: filters)
        
     }
+  
+    
+     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let  headerCell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as? CustomHeaderCell
+        
+        switch (section) {
+        case 0:
+            headerCell!.headerLabel.text = "Deals";
+            //return sectionHeaderView
+        //case 1:
+         //   headerCell!.headerLabel.text = "Distance";
+            //return sectionHeaderView
+       // case 2:
+       //     headerCell!.headerLabel.text = "Sort By";
+            //return sectionHeaderView
+        default:
+            headerCell!.headerLabel.text = "Category";
+        }
+        
+        return headerCell
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        return 3
+    }
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        if section == 0 {
+            return 1
+        }else{
+            return categories.count
+        }
+
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = filtersTableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath:indexPath) as! SwitchCell
         
-        cell.switchLabel.text = categories[indexPath.row]["name"]
+        if indexPath.section == 0 {
+            let cell = filtersTableView.dequeueReusableCellWithIdentifier("DealCell", forIndexPath:indexPath) as! DealCell
+            cell.dealOnSwitch.on = switchStates[indexPath.row] ?? false
+            cell.dealDelegate = self
+            return cell
+        }
         
-        cell.delegate = self
-        
-        
-//        if switchStates[indexPath.row] != nil{
-//            cell.onSwitch.on = switchStates[indexPath.row]!
-//        }else{
-//            cell.onSwitch.on = false
-//        }
-        cell.onSwitch.on = switchStates[indexPath.row] ?? false
+        else
+        {
+            
+            let cell = filtersTableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath:indexPath) as! SwitchCell
+            cell.switchLabel.text = categories[indexPath.row]["name"]
+            cell.delegate = self
+            //        if switchStates[indexPath.row] != nil{
+            //            cell.onSwitch.on = switchStates[indexPath.row]!
+            //        }else{
+            //            cell.onSwitch.on = false
+            //        }
+            cell.onSwitch.on = switchStates[indexPath.row] ?? false
+            return cell
+        }
 
-        return cell
+        
     }
     /*
     // MARK: - Navigation
@@ -93,6 +135,11 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool){
         let indexPath = filtersTableView.indexPathForCell(switchCell)!
+        switchStates[indexPath.row] = value
+    }
+    
+    func dealSwitchCell(dealCell: DealCell, didChangeValue value: Bool){
+        let indexPath = filtersTableView.indexPathForCell(dealCell)!
         switchStates[indexPath.row] = value
     }
         
