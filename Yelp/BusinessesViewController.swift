@@ -21,18 +21,22 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         // effects scrollbar indicator
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
-
+        
         
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
+            controller.hidesNavigationBarDuringPresentation = false
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
-            
-            self.tableView.tableHeaderView = controller.searchBar
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+            //self.tableView.tableHeaderView = controller.searchBar
+            self.navigationItem.titleView = controller.searchBar
+
             
             return controller
         })()
