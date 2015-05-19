@@ -41,8 +41,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             return controller
         })()
         
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-        //Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+       // Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Restaurants", sort: .BestMatched, categories: ["sushi", "burgers", "thai"], deals: false) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
             for business in businesses {
@@ -51,7 +51,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
                 println(business.distance!)
                 self.tableData.append(business.name!)
             }
-        })
+        }
         
   
         
