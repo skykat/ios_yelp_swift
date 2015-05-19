@@ -1,8 +1,8 @@
-ls## Yelp
+## Yelp
 
 This is a Yelp search app using the [Yelp API](https://www.yelp.com/developers/).
 
-Time spent: `<Number of hours spent>`
+Time spent: `10`
 
 ### Features
 
@@ -31,4 +31,4 @@ Time spent: `<Number of hours spent>`
 
 ### Walkthrough
 
-![Video Walkthrough](https://github.com/skykat/ios_yelp_swift/blob/master/w2_yelp.gif
+![Video Walkthrough](https://github.com/skykat/ios_yelp_swift/blob/master/w2_yelp.gif)
