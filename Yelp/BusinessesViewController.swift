@@ -48,6 +48,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             for business in businesses {
                 println(business.name!)
                 println(business.address!)
+                println(business.distance!)
                 self.tableData.append(business.name!)
             }
         })
@@ -121,10 +122,12 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
         var categories = filters["categories"] as? [String]
         var deals = filters["deals.id"] as? String
+        var distance = filters["distance"] as? String
         var offeringDeal = true
         if deals == nil{
             offeringDeal = false
         }
+        
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: categories, deals: offeringDeal) { (businesses: [Business]!, error: NSError!) -> Void in
 //        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil){(businesses: [Business]!, error: NSError!)
 //        -> Void in

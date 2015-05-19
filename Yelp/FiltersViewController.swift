@@ -14,19 +14,21 @@ import UIKit
     optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
 }
 
-class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DealSwitchCellDelegate{
+class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DealSwitchCellDelegate, DistanceCellDelegate{
 
     @IBOutlet weak var filtersTableView: UITableView!
     
     weak var delegate: FiltersViewControllerDelegate?
     
     var categories: [[String:String]]!
+    var distances: [[String:String]]!
     var switchStates = [Int:Bool]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         categories = yelpCategories()
+        distances = yelpDistance()
         filtersTableView.delegate = self
         filtersTableView.dataSource = self
         
@@ -67,10 +69,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         switch (section) {
         case 0:
             headerCell!.headerLabel.text = "Deals";
-            //return sectionHeaderView
-        //case 1:
-         //   headerCell!.headerLabel.text = "Distance";
-            //return sectionHeaderView
+        case 1:
+            headerCell!.headerLabel.text = "Distance";
        // case 2:
        //     headerCell!.headerLabel.text = "Sort By";
             //return sectionHeaderView
@@ -91,7 +91,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
-        }else{
+        }
+        
+        if section == 1{
+            return distances.count
+        }
+        
+        else{
             return categories.count
         }
 
@@ -105,7 +111,14 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             cell.dealDelegate = self
             return cell
         }
-        
+        else if indexPath.section == 1 {
+            let cell = filtersTableView.dequeueReusableCellWithIdentifier("DistanceCell", forIndexPath:indexPath) as! DistanceCell
+            cell.distanceLabel.text = distances[indexPath.row]["name"]
+            cell.distanceSwitch.on = switchStates[indexPath.row] ?? false
+            cell.distanceDelegate = self
+            return cell
+        }
+            
         else
         {
             
@@ -123,6 +136,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
 
         
     }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -142,7 +157,18 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         let indexPath = filtersTableView.indexPathForCell(dealCell)!
         switchStates[indexPath.row] = value
     }
-        
+    
+    func distanceSwitchCell(distanceCell: DistanceCell, didChangeValue value: Bool){
+        let indexPath = filtersTableView.indexPathForCell(distanceCell)!
+        switchStates[indexPath.row] = value
+    }
+    func yelpDistance() -> [[String:String]]{
+        return [["name" : "Auto", "code": "0 mi"],
+            ["name" : "1 mi", "code": "1"],
+            ["name" : "5 mi", "code": "5"],
+            ["name" : "10 mi", "code": "10"]]
+    }
+    
         func yelpCategories() -> [[String:String]]{
             return [["name" : "Afghan", "code": "afghani"],
             ["name" : "African", "code": "african"],

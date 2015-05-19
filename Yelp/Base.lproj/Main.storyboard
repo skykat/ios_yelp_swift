@@ -138,7 +138,6 @@
         <!--Filters-->
         <scene sceneID="bME-3K-aJT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0R8-IJ-6bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="QzH-pL-tpW" customClass="FiltersViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fxN-XG-H3l"/>
@@ -206,7 +205,6 @@
                                         <connections>
                                             <outlet property="distanceLabel" destination="bhk-SN-qqQ" id="f5z-lb-dsZ"/>
                                             <outlet property="distanceSwitch" destination="4Gh-xV-LYa" id="aXl-Ck-lc1"/>
-                                            <outlet property="headerLabel" destination="bhk-SN-qqQ" id="bUG-gk-R3w"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCell" rowHeight="93" id="2vO-3M-Fxd" customClass="SwitchCell" customModule="Yelp" customModuleProvider="target">
@@ -287,6 +285,7 @@
                         <outlet property="filtersTableView" destination="Vrw-Wd-q7o" id="QKa-Hv-1pc"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0R8-IJ-6bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2519" y="338"/>
         </scene>
@@ -311,7 +310,6 @@
         <!--Navigation Controller-->
         <scene sceneID="7vx-sd-aR5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yuS-sH-Rym" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ix4-DQ-gm9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8GR-ed-mPW">
@@ -323,6 +321,7 @@
                         <segue destination="QzH-pL-tpW" kind="relationship" relationship="rootViewController" id="Ksl-9Z-Pij"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yuS-sH-Rym" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1999" y="338"/>
         </scene>
